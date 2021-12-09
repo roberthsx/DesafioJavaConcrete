@@ -1,0 +1,116 @@
+#
+# A fatal error has been detected by the Java Runtime Environment:
+#
+#  SIGSEGV (0xb) at pc=0x00007f9b18a063d1, pid=3938, tid=3952
+#
+# JRE version: OpenJDK Runtime Environment (11.0.11+9) (build 11.0.11+9-Ubuntu-0ubuntu2.18.04)
+# Java VM: OpenJDK 64-Bit Server VM (11.0.11+9-Ubuntu-0ubuntu2.18.04, mixed mode, sharing, tiered, compressed oops, g1 gc, linux-amd64)
+# Problematic frame:
+# C  [libjimage.so+0x23d1]
+#
+# No core dump will be written. Core dumps have been disabled. To enable core dumping, try "ulimit -c unlimited" before starting Java again
+#
+# If you would like to submit a bug report, please visit:
+#   https://bugs.launchpad.net/ubuntu/+source/openjdk-lts
+#
+
+---------------  S U M M A R Y ------------
+
+Command Line: -agentlib:jdwp=transport=dt_socket,suspend=y,address=localhost:36951 -javaagent:/home/robert/.eclipse/360744286_linux_gtk_x86_64/configuration/org.eclipse.osgi/222/0/.cp/lib/javaagent-shaded.jar -Dfile.encoding=UTF-8 concrete.com.DesafioJava.DesafioJavaApplication
+
+Host: AMD Ryzen 5 2400G with Radeon Vega Graphics, 2 cores, 3G, Peppermint 10 Ten
+Time: Wed Dec  8 20:49:27 2021 -03 elapsed time: 86.604910 seconds (0d 0h 1m 26s)
+
+---------------  T H R E A D  ---------------
+
+Current thread (0x00007f9b1412a800):  JavaThread "Signal Dispatcher" daemon [_thread_in_vm, id=3952, stack(0x00007f9af4758000,0x00007f9af4859000)]
+
+Stack: [0x00007f9af4758000,0x00007f9af4859000],  sp=0x00007f9af4856220,  free space=1016k
+Native frames: (J=compiled Java code, A=aot compiled Java code, j=interpreted, Vv=VM code, C=native code)
+C  [libjimage.so+0x23d1]
+C  [libjimage.so+0x304a]
+C  [libjimage.so+0x3515]  JIMAGE_FindResource+0xd5
+V  [libjvm.so+0x596f2f]
+V  [libjvm.so+0x5991cb]
+V  [libjvm.so+0xd845ac]
+V  [libjvm.so+0xd831d2]
+V  [libjvm.so+0xd856e6]
+V  [libjvm.so+0x6403ad]
+V  [libjvm.so+0x824a4a]
+j  jdk.internal.misc.Signal.dispatch(I)V+25 java.base@11.0.11
+v  ~StubRoutines::call_stub
+V  [libjvm.so+0x82db91]
+V  [libjvm.so+0x82ca00]
+V  [libjvm.so+0xb69441]
+V  [libjvm.so+0xdba950]
+V  [libjvm.so+0xdb67e9]
+V  [libjvm.so+0xb7b34e]
+
+Java frames: (J=compiled Java code, j=interpreted, Vv=VM code)
+j  jdk.internal.misc.Signal.dispatch(I)V+25 java.base@11.0.11
+v  ~StubRoutines::call_stub
+
+siginfo: si_signo: 11 (SIGSEGV), si_code: 1 (SEGV_MAPERR), si_addr: 0x00007f9b0b87e8e0
+
+Register to memory mapping:
+
+RAX=0x0000000000001a31 is an unknown value
+RBX=0x00007f9af48562d1 is pointing into the stack for thread: 0x00007f9b1412a800
+RCX=0x00007f9b0b87801c is an unknown value
+RDX=0x0000000000001a31 is an unknown value
+RSP=0x00007f9af4856220 is pointing into the stack for thread: 0x00007f9b1412a800
+RBP=0x00007f9af4856240 is pointing into the stack for thread: 0x00007f9b1412a800
+RSI=0x00007f9af48562d0 is pointing into the stack for thread: 0x00007f9b1412a800
+RDI=0x00007f9b18c09030: <offset 0x0000000000205030> in /usr/lib/jvm/java-11-openjdk-amd64/lib/libjimage.so at 0x00007f9b18a04000
+R8 =0x0 is NULL
+R9 =0x0000000076100fa4 is an unknown value
+R10=0x00007f9af48562f3 is pointing into the stack for thread: 0x00007f9b1412a800
+R11=0x6c616e6769532f63 is an unknown value
+R12=0x00007f9af48562d0 is pointing into the stack for thread: 0x00007f9b1412a800
+R13=0x000000000000843b is an unknown value
+R14=0x00007f9af4857368 is pointing into the stack for thread: 0x00007f9b1412a800
+R15=0x00007f9b1412b290 points into unknown readable memory: 0x65746e692f6b646a | 6a 64 6b 2f 69 6e 74 65
+
+
+Registers:
+RAX=0x0000000000001a31, RBX=0x00007f9af48562d1, RCX=0x00007f9b0b87801c, RDX=0x0000000000001a31
+RSP=0x00007f9af4856220, RBP=0x00007f9af4856240, RSI=0x00007f9af48562d0, RDI=0x00007f9b18c09030
+R8 =0x0000000000000000, R9 =0x0000000076100fa4, R10=0x00007f9af48562f3, R11=0x6c616e6769532f63
+R12=0x00007f9af48562d0, R13=0x000000000000843b, R14=0x00007f9af4857368, R15=0x00007f9b1412b290
+RIP=0x00007f9b18a063d1, EFLAGS=0x0000000000010212, CSGSFS=0x002b000000000033, ERR=0x0000000000000004
+  TRAPNO=0x000000000000000e
+
+Top of Stack: (sp=0x00007f9af4856220)
+0x00007f9af4856220:   0000000000000000 00007f9b14009bc0
+0x00007f9af4856230:   0000000000000000 00007f9af48562d0
+0x00007f9af4856240:   00007f9af48562b0 00007f9b18a0704a
+0x00007f9af4856250:   0000000000000000 0000000000000000 
+
+Instructions: (pc=0x00007f9b18a063d1)
+0x00007f9b18a062d1:   48 89 df 48 89 4d 88 e8 53 f3 ff ff 48 8b 4d 88
+0x00007f9b18a062e1:   44 03 6d 90 e9 42 fd ff ff 66 0f 1f 44 00 00 8b
+0x00007f9b18a062f1:   08 41 89 0e 44 89 c1 8b 74 08 fc 41 89 74 0e fc
+0x00007f9b18a06301:   e9 d8 fe ff ff 66 2e 0f 1f 84 00 00 00 00 00 b9
+0x00007f9b18a06311:   0a 00 00 00 e9 95 fd ff ff 44 89 c1 0f b7 74 08
+0x00007f9b18a06321:   fe 66 41 89 74 0e fe e9 b1 fe ff ff 0f 1f 00 0f
+0x00007f9b18a06331:   b6 17 89 f1 4c 8d 47 01 84 d2 74 1a 0f 1f 00 69
+0x00007f9b18a06341:   c9 93 01 00 01 49 83 c0 01 31 d1 41 0f b6 50 ff
+0x00007f9b18a06351:   84 d2 75 eb 89 ce 89 f0 25 ff ff ff 7f c3 90 48
+0x00007f9b18a06361:   85 d2 0f 84 e1 00 00 00 85 c9 0f 84 d9 00 00 00
+0x00007f9b18a06371:   55 48 89 e5 41 55 41 54 53 48 8d 5e 01 48 83 ec
+0x00007f9b18a06381:   08 44 0f b6 06 45 84 c0 0f 84 b1 00 00 00 49 89
+0x00007f9b18a06391:   da b8 93 01 00 01 66 0f 1f 84 00 00 00 00 00 44
+0x00007f9b18a063a1:   69 c8 93 01 00 01 49 83 c2 01 41 0f b6 c0 45 0f
+0x00007f9b18a063b1:   b6 42 ff 44 31 c8 45 84 c0 75 e4 25 ff ff ff 7f
+0x00007f9b18a063c1:   41 89 cd 48 89 d1 31 d2 49 89 f4 41 f7 f5 89 d0
+0x00007f9b18a063d1:   8b 34 81 48 8b 07 ff 50 20 85 c0 7f 22 ba ff ff
+0x00007f9b18a063e1:   ff ff 74 04 f7 d0 89 c2 48 83 c4 08 89 d0 5b 41
+0x00007f9b18a063f1:   5c 41 5d 5d c3 66 2e 0f 1f 84 00 00 00 00 00 41
+0x00007f9b18a06401:   0f b6 34 24 89 c7 40 84 f6 74 1b 0f 1f 40 00 69
+0x00007f9b18a06411:   ff 93 01 00 01 48 83 c3 01 31 f7 0f b6 73 ff 40
+0x00007f9b18a06421:   84 f6 75 eb 89 f8 25 ff ff ff 7f 31 d2 48 83 c4
+0x00007f9b18a06431:   08 41 f7 f5 5b 41 5c 41 5d 5d 89 d0 c3 66 90 b8
+0x00007f9b18a06441:   93 01 00 01 e9 77 ff ff ff 83 ca ff 89 d0 c3 0f
+0x00007f9b18a06451:   b6 17 48 89 f8 84 d2 75 19 eb 1e 0f 1f 40 00 38
+0x00007f9b18a06461:   ca 75 1c 48 83 c0 01 0f b6 10 48 83 c6 01 84 d2
+0x00007f9b18a06471:   74
