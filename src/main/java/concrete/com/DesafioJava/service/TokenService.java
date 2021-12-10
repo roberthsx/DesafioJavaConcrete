@@ -1,9 +1,7 @@
 package concrete.com.DesafioJava.service;
 
-import java.sql.Date;
-
+import java.util.Date;
 import org.springframework.stereotype.Service;
-
 import concrete.com.DesafioJava.model.Usuario;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;

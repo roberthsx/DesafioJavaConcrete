@@ -1,13 +1,12 @@
 package concrete.com.DesafioJava.service;
 
-import concrete.com.DesafioJava.repository.UsuarioRepository;
+
 import io.jsonwebtoken.Claims;
-
-import java.sql.Date;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import java.util.Date;
 
+import concrete.com.DesafioJava.repository.UsuarioRepository;
 import concrete.com.DesafioJava.dto.DadosLogin;
 import concrete.com.DesafioJava.exception.ExistingEmailException;
 import concrete.com.DesafioJava.exception.ExpiredTokenException;
