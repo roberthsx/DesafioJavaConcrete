@@ -27,10 +27,6 @@ public class Usuario {
 	        this.email = email;
 	        this.senha = senha;
 	}
-	
-	public Usuario(){
-
-    }
 
     public String getNome() {
         return nome;
@@ -71,6 +67,5 @@ public class Usuario {
     public String getToken() {
         return token;
     }
-	
-	
+    
 }

@@ -1,6 +1,5 @@
 package concrete.com.DesafioJava.service;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import concrete.com.DesafioJava.model.Usuario;
@@ -9,18 +8,17 @@ import concrete.com.DesafioJava.repository.UsuarioRepository;
 @Service
 public class UsuarioService {
 	
-	  private UsuarioRepository userRepository;
-	    private TokenService tokenService;
+  	private UsuarioRepository _userRepository;
+	private TokenService _tokenService;
 
-	    @Autowired
-	    public UsuarioService(UsuarioRepository userRepository, TokenService tokenService){
-	        this.userRepository = userRepository;
-	        this.tokenService = tokenService;
-	    }
 
-	    public Usuario registrate(Usuario user){
-	        user.setToken(tokenService.generateToken(user));
-	        return userRepository.save(user);
-	    }
+	public UsuarioService(UsuarioRepository userRepository, TokenService tokenService){
+		this._userRepository = userRepository;
+		this._tokenService = tokenService;
+	}
 
+	public Usuario cadastro(Usuario user){
+		user.setToken(_tokenService.generateToken(user));
+		return _userRepository.save(user);
+	}
 }

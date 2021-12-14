@@ -6,15 +6,11 @@ import concrete.com.DesafioJava.model.Usuario;
 
 @JsonAutoDetect(fieldVisibility= JsonAutoDetect.Visibility.ANY)
 public class UsuarioCadastroDTO {
-	private Long id;
 
+	private Long id;
     private String nome;
     private String email;
     private String senha;
-
-    public UsuarioCadastroDTO() {
-
-    }
 
     public UsuarioCadastroDTO(String nome, String email, String senha) {
         this.nome = nome;
@@ -22,10 +18,9 @@ public class UsuarioCadastroDTO {
         this.senha = senha;
     }
 
-    public Usuario toUser() {
+    public Usuario toUsuario() {
         return new Usuario(getNome(), getEmail(), getSenha());
     }
-
 
     public String getNome() {
         return nome;
@@ -50,7 +45,6 @@ public class UsuarioCadastroDTO {
     public void setSenha(String senha) {
         this.senha = senha;
     }
-
 
     public Long getId() {
         return id;

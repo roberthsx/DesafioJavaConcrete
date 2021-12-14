@@ -17,10 +17,8 @@ public class UsuarioAutenticadoDTO {
         this.tipo = tipo;
     }
 
-    public UsuarioAutenticadoDTO(){}
-
-    public static UsuarioAutenticadoDTO toDTO(Usuario user, String tipo) {
-        return new UsuarioAutenticadoDTO(user.getEmail(), user.getNome(), user.getToken(), tipo);
+    public static UsuarioAutenticadoDTO toDTO(Usuario usuario, String tipo) {
+        return new UsuarioAutenticadoDTO(usuario.getEmail(), usuario.getNome(), usuario.getToken(), tipo);
     }
 
     public String getEmail() {

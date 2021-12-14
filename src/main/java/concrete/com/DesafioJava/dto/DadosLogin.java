@@ -5,15 +5,10 @@ public class DadosLogin {
 	private String email;
     private String senha;
 
-    public DadosLogin() {
-
-    }
-
     public DadosLogin(String email, String senha) {
         this.email = email;
         this.senha = senha;
     }
-
 
     public String getEmail() {
         return email;
@@ -30,5 +25,4 @@ public class DadosLogin {
     public void setSenha(String senha) {
         this.senha = senha;
     }
-
 }

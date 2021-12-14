@@ -1,6 +1,5 @@
 package concrete.com.DesafioJava.controller;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -15,22 +14,15 @@ import concrete.com.DesafioJava.service.UsuarioService;
 @RestController
 public class UsuarioController {
 	
-	private UsuarioService userRegistrationService;
+	private UsuarioService _usuarioService;
 
-    @Autowired
-    public UsuarioController(UsuarioService userRegistrationService){
-        this.userRegistrationService = userRegistrationService;
+    public UsuarioController(UsuarioService usuarioService){
+        this._usuarioService = usuarioService;
     }
 
-    public UsuarioController(){
-
+    @PostMapping("/usuario")
+    public ResponseEntity<UsuarioAutenticadoDTO> CadastrarUsuario(@RequestBody UsuarioCadastroDTO usuarioCadastroDTO){
+        Usuario usuario = _usuarioService.cadastro(usuarioCadastroDTO.toUsuario());
+        return  new ResponseEntity<UsuarioAutenticadoDTO>(UsuarioAutenticadoDTO.toDTO(usuario, "Bearer "), HttpStatus.CREATED);
     }
-
-    @PostMapping("/user")
-    public ResponseEntity<UsuarioAutenticadoDTO> registrate(@RequestBody UsuarioCadastroDTO userRegistrationDTO){
-        Usuario user = userRegistrationService.registrate(userRegistrationDTO.toUser());
-        return  new ResponseEntity<UsuarioAutenticadoDTO>(UsuarioAutenticadoDTO.toDTO(user, "Bearer "), HttpStatus.CREATED);
-    }
-
-
 }

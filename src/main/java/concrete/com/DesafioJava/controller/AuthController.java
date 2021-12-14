@@ -16,21 +16,15 @@ import concrete.com.DesafioJava.service.UsuarioAuthService;
 @RestController
 public class AuthController {
 
-	private UsuarioAuthService userAuthenticationService;
+	private UsuarioAuthService _usuarioAutenticacaoService;
 
-    @Autowired
-    public AuthController(UsuarioAuthService userAuthenticationService){
-        this.userAuthenticationService = userAuthenticationService;
+    public AuthController(UsuarioAuthService usuarioAutenticacaoService){
+        this._usuarioAutenticacaoService = usuarioAutenticacaoService;
     }
-
-    public AuthController(){
-
-    }
-
 
     @PostMapping("/login")
-    public ResponseEntity<UsuarioAutenticadoDTO> autenticar(@RequestBody DadosLogin dadosLogin, @RequestHeader String Authorization){
-        Usuario user = userAuthenticationService.autenticacao(dadosLogin, Authorization);
+    public ResponseEntity<UsuarioAutenticadoDTO> Autenticar(@RequestBody DadosLogin dadosLogin, @RequestHeader String Authorization){
+        Usuario user = _usuarioAutenticacaoService.autenticacao(dadosLogin, Authorization);
         return new ResponseEntity<UsuarioAutenticadoDTO>(UsuarioAutenticadoDTO.toDTO(user, "Bearer "), HttpStatus.ACCEPTED);
     }
 }

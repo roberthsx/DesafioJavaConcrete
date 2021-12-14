@@ -2,7 +2,6 @@ package concrete.com.DesafioJava.service;
 
 
 import io.jsonwebtoken.Claims;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.util.Date;
 
@@ -17,45 +16,42 @@ import concrete.com.DesafioJava.model.Usuario;
 @Service
 public class UsuarioAuthService {
 
-	 private final UsuarioRepository userRepository;
-	    private final TokenService tokenService;
-
-	    @Autowired
-	    public UsuarioAuthService(UsuarioRepository userRepository, TokenService tokenService){
-	        this.userRepository = userRepository;
-	        this.tokenService = tokenService;
-	    }
+	private final UsuarioRepository _usuarioRepository;
+	private final TokenService _tokenService;
 
 
-	    public Usuario autenticacao(DadosLogin dados, String token){
-	    	Usuario user = userRepository.findByEmail(dados.getEmail()).orElseThrow(ExistingEmailException::new);
-	        if(dados.getSenha().equals(user.getSenha()) && !token.isEmpty() && validacao(token)) {
-	            return user;
-	        }
-	        else {
-	            throw new InvalidLoginException();
-	        }
-	    }
+	public UsuarioAuthService(UsuarioRepository usuarioRepository, TokenService tokenService){
+		this._usuarioRepository = usuarioRepository;
+		this._tokenService = tokenService;
+	}
 
-	    private boolean validacao(String token) {
-	        try {
-	            String tokenTratado = token.replace("Bearer ", "");
-	            Claims claims = tokenService.decodeToken(tokenTratado);
+	public Usuario autenticacao(DadosLogin dados, String token){
+		Usuario usuario = _usuarioRepository.findByEmail(dados.getEmail()).orElseThrow(ExistingEmailException::new);
+		if(dados.getSenha().equals(usuario.getSenha()) && !token.isEmpty() && validacao(token)) {
+			return usuario;
+		}
+		else {
+			throw new InvalidLoginException();
+		}
+	}
 
-	            System.out.println(claims.getIssuer());
-	            System.out.println(claims.getIssuedAt());
-	            //Verifica se o token está expirado
-	            if (claims.getExpiration().before(new Date(System.currentTimeMillis()))) throw new ExpiredTokenException();
-	            System.out.println(claims.getExpiration());
-	            return true;
-	        } catch (ExpiredTokenException et){
-	            et.printStackTrace();
-	            throw et;
-	        } catch (Exception e) {
-	            e.printStackTrace();
-	            throw new InvalidTokenException();
-	        }
+	private boolean validacao(String token) {
+		try {
+			String tokenTratado = token.replace("Bearer ", "");
+			Claims claims = _tokenService.decodeToken(tokenTratado);
 
-	    }
-	
+			System.out.println(claims.getIssuer());
+			System.out.println(claims.getIssuedAt());
+			//Verifica se o token está expirado
+			if (claims.getExpiration().before(new Date(System.currentTimeMillis()))) throw new ExpiredTokenException();
+			System.out.println(claims.getExpiration());
+			return true;
+		} catch (ExpiredTokenException et){
+			et.printStackTrace();
+			throw et;
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw new InvalidTokenException();
+		}
+	}
 }
