@@ -1,21 +1,27 @@
 package concrete.com.DesafioJava.model;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Entity
+@Table(name="TBL_USUARIOS")
 public class Usuario {
-	
-	@Id
-    @GeneratedValue
-	private long id; 
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+	private long id;
+    @Column(name="nome", nullable=false, length=200)
 	private String nome;
+    @Column(name="email" , nullable=false, length=200)
 	private String email;
+    @Column(name="senha" , nullable=false)
 	private String senha;
+    @Column(name="token" , nullable=false)
 	private String token;
-	
-	public Usuario(long id, String nome, String email, String senha) {
+
+    public Usuario() {
+    }
+
+    public Usuario(long id, String nome, String email, String senha) {
 		this.id = id;
 		this.nome = nome;
 		this.email = email;
