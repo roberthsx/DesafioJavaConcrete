@@ -1,5 +1,6 @@
 package concrete.com.DesafioJava.service;
 
+import concrete.com.DesafioJava.dto.UsuarioCadastroDTO;
 import concrete.com.DesafioJava.model.Usuario;
 import concrete.com.DesafioJava.repository.UsuarioRepository;
 import org.junit.jupiter.api.Assertions;
@@ -12,6 +13,7 @@ import org.mockito.MockitoAnnotations;
 import org.mockito.Spy;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import static concrete.com.DesafioJava.service.usuarioFactory.UsuarioFactory.*;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
@@ -27,43 +29,24 @@ public class UsuarioServiceTest {
 
     @Mock
     UsuarioRepository usuarioRepository;
+    private  String token;
 
     @BeforeEach
     public void init() {
+
         MockitoAnnotations.openMocks(this);
+        token ="eyJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE2NDE5OTAyOTUsInN1YiI6IlRlc3RlIEpXVCBBUEkiLCJleHAiOjE2NDE5OTIwOTV9.e3drFCO4E2IWvrUrqmujL5fXlwR1ArMVcef3qAjs84c";
     }
-
-    /*@Test
-    void testBuscaTodosUsuarios_RetornoOk()
-    {
-        List<Usuario> usuarios = new ArrayList<Usuario>();
-        Usuario usuario1 = new Usuario(1,"Teste1","teste1@teste.com.br","teste1");
-        Usuario usuario2 = new Usuario(2,"Teste2","teste2@teste.com.br","teste2");
-        Usuario usuario3 = new Usuario(3,"Teste3","teste3@teste.com.br","teste3");
-
-        usuarios.add(usuario1);
-        usuarios.add(usuario2);
-        usuarios.add(usuario3);
-
-        when(usuarioRepository.findAll()).thenReturn(usuarios);
-
-        //test
-        List<Usuario> empList = service.findall(usuario1);
-
-        assertEquals(3, empList.size());
-        verify(usuarioRepository, times(1)).findAll();
-    }*/
 
     @Test
     void testCadastroUsuario_RetornOk()
     {
         //arrange
-        Usuario usuario = new Usuario(1,"Teste1","teste1@teste.com.br","teste1");
-        String token ="AAAAAAAAAAAAAAAAAAAAAMLheAAAAAAA0%2BuSeid%2BULvsea4JtiGRiSDSJSI%3DEUifiRBkKG5E2XzMDjRfl76ZC9Ub0wnz4XsNiRVBChTYbJcE3F";
+        Usuario usuario = usuarioCadastroDtoSimples();
         when(tokenService.generateToken(usuario)).thenReturn(token);
 
         //act
-        usuarioService.cadastro(usuario);
+        usuarioService.Cadastro(usuario);
 
         //assert
         verify(usuarioRepository, times(1)).save(usuario);
@@ -73,15 +56,67 @@ public class UsuarioServiceTest {
     void testCadastroUsuario_RetornaException()
     {
         //arrange
-        Usuario usuario = new Usuario(1,"Teste1","teste1@teste.com.br","teste1");
+        Usuario usuario = usuarioCadastroDtoSimples();
         String expectedMessage = "Erro ao cadastrar Usuario.";
         RuntimeException exceptionMock = new RuntimeException("Erro ao conectar ao servidor");
         when(tokenService.generateToken(usuario)).thenThrow(exceptionMock);
 
         //act
-        Exception exception = assertThrows(RuntimeException.class, () -> usuarioService.cadastro(usuario));
+        Exception exception = assertThrows(RuntimeException.class, () -> usuarioService.Cadastro(usuario));
 
         //assert
         Assertions.assertEquals(expectedMessage, exception.getMessage());
+    }
+
+    @Test
+    void testCadastroUsuario_QuandoEmailVazio_RetornaMensagem()
+    {
+        //arrange
+        Usuario usuario = usuarioCadastroDtoEmailVazio();
+
+        //act
+        usuarioService.Cadastro(usuario);
+
+        //assert
+        verify(usuarioRepository, times(1)).save(usuario);
+    }
+
+    @Test
+    void testCadastroUsuario_QuandoEmailInvalido_RetornaMensagem()
+    {
+        //arrange
+        Usuario usuario = usuarioCadastroDtoEmailInvalido();
+
+        //act
+        usuarioService.Cadastro(usuario);
+
+        //assert
+        verify(usuarioRepository, times(1)).save(usuario);
+    }
+
+    @Test
+    void testCadastroUsuario_QuandoNomeVazio_RetornaMensagem()
+    {
+        //arrange
+        Usuario usuario = usuarioCadastroDtoNomeVazio();
+
+        //act
+        usuarioService.Cadastro(usuario);
+
+        //assert
+        verify(usuarioRepository, times(1)).save(usuario);
+    }
+
+    @Test
+    void testCadastroUsuario_QuandoSenhaVazio_RetornaMensagem()
+    {
+        //arrange
+        Usuario usuario = usuarioCadastroDtoSenhaVazio();
+
+        //act
+        usuarioService.Cadastro(usuario);
+
+        //assert
+        verify(usuarioRepository, times(1)).save(usuario);
     }
 }

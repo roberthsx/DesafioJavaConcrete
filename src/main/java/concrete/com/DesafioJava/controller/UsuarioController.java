@@ -22,7 +22,7 @@ public class UsuarioController {
 
     @PostMapping("/usuario")
     public ResponseEntity<UsuarioAutenticadoDTO> CadastrarUsuario(@RequestBody UsuarioCadastroDTO usuarioCadastroDTO){
-        Usuario usuario = _usuarioService.cadastro(usuarioCadastroDTO.toUsuario());
+        Usuario usuario = _usuarioService.Cadastro(usuarioCadastroDTO.toUsuario());
         return  new ResponseEntity<UsuarioAutenticadoDTO>(UsuarioAutenticadoDTO.toDTO(usuario, "Bearer "), HttpStatus.CREATED);
     }
 }

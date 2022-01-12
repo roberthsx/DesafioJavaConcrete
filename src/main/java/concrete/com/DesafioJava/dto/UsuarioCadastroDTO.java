@@ -4,6 +4,10 @@ import com.fasterxml.jackson.annotation.JsonAutoDetect;
 
 import concrete.com.DesafioJava.model.Usuario;
 
+import java.util.ArrayList;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 @JsonAutoDetect(fieldVisibility= JsonAutoDetect.Visibility.ANY)
 public class UsuarioCadastroDTO {
 
@@ -53,4 +57,5 @@ public class UsuarioCadastroDTO {
     public void setId(Long id) {
         this.id = id;
     }
+
 }
