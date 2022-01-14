@@ -9,7 +9,7 @@ import io.jsonwebtoken.SignatureAlgorithm;
 
 @Service
 public class TokenService {
-	 private String key = "String Aleatoria Secret";
+	 private String key = "DesafioConcrete";
 
 	//30 minutos
 	private static final long expirationTime = 1800000;
@@ -17,7 +17,7 @@ public class TokenService {
 	public String generateToken(Usuario usuario) {
 		return Jwts.builder()
 				.setIssuedAt(new Date(System.currentTimeMillis()))
-				.setSubject("Teste JWT API")
+				.setSubject(usuario.getNome())
 				.setExpiration(new Date(System.currentTimeMillis() + expirationTime))
 				.signWith(SignatureAlgorithm.HS256, key)
 				.compact();

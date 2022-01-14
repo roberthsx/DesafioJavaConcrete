@@ -1,5 +1,9 @@
 package concrete.com.DesafioJava.exception;
 
-public class ExistingEmailException extends RuntimeException{
+import java.util.function.Supplier;
 
+public class ExistingEmailException extends RuntimeException{
+    public ExistingEmailException() {
+        super("Email já cadastrado.");
+    }
 }

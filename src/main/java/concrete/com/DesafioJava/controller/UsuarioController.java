@@ -2,9 +2,7 @@ package concrete.com.DesafioJava.controller;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import concrete.com.DesafioJava.dto.UsuarioAutenticadoDTO;
 import concrete.com.DesafioJava.dto.UsuarioCadastroDTO;
@@ -22,7 +20,14 @@ public class UsuarioController {
 
     @PostMapping("/usuario")
     public ResponseEntity<UsuarioAutenticadoDTO> CadastrarUsuario(@RequestBody UsuarioCadastroDTO usuarioCadastroDTO){
-        Usuario usuario = _usuarioService.cadastro(usuarioCadastroDTO.toUsuario());
-        return  new ResponseEntity<UsuarioAutenticadoDTO>(UsuarioAutenticadoDTO.toDTO(usuario, "Bearer "), HttpStatus.CREATED);
+        try{
+            Usuario usuario = _usuarioService.Cadastro(usuarioCadastroDTO.toUsuario());
+            if(usuario.getMensagensErros().length() >=1){
+                return  new ResponseEntity(usuario.getMensagensErros().toString(), HttpStatus.OK);
+            }
+            return  new ResponseEntity<UsuarioAutenticadoDTO>(UsuarioAutenticadoDTO.toDTO(usuario, "Bearer "), HttpStatus.CREATED);
+        }catch(Exception exception){
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 }
