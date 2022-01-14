@@ -4,6 +4,9 @@ import concrete.com.DesafioJava.dto.DadosLogin;
 import concrete.com.DesafioJava.model.Usuario;
 import concrete.com.DesafioJava.repository.UsuarioRepository;
 import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.SignatureAlgorithm;
+import io.jsonwebtoken.impl.DefaultClaims;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -12,6 +15,7 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.mockito.Spy;
 
+import java.util.Date;
 import java.util.Optional;
 
 import static concrete.com.DesafioJava.service.usuarioFactory.UsuarioAuthFactory.*;
@@ -36,7 +40,13 @@ public class UsuarioAuthServiceTest {
     public void init() {
 
         MockitoAnnotations.openMocks(this);
-        token = "eyJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE2NDE5OTAyOTUsInN1YiI6IlRlc3RlIEpXVCBBUEkiLCJleHAiOjE2NDE5OTIwOTV9.e3drFCO4E2IWvrUrqmujL5fXlwR1ArMVcef3qAjs84c";
+        //token = "eyJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE2NDE5OTAyOTUsInN1YiI6IlRlc3RlIEpXVCBBUEkiLCJleHAiOjE2NDE5OTIwOTV9.uTaO_7RMWqdr3voFpdSmW-3e8ORCM6c4EAB4xij7zjk";
+        token = Jwts.builder()
+                .setIssuedAt(new Date(System.currentTimeMillis()))
+                .setSubject("roberthsx")
+                .setExpiration(new Date(System.currentTimeMillis() + 1800000))
+                .signWith(SignatureAlgorithm.HS256, "testeApi")
+                .compact();
     }
 
     @Test
@@ -44,9 +54,19 @@ public class UsuarioAuthServiceTest {
         //arrange
         DadosLogin dadosLogin = DadosLoginSimples();
         Usuario usuario = UsuarioSimples();
-        //Claims claims = new Claims();
+        Date now = new Date();
+        Date createdAt = new Date(now.getTime());
+        // Expired in 10 minutes
+        Date expiredAt = new Date(now.getTime() + 10 * 60 * 1000);
+        Claims claims = new DefaultClaims()
+                .setId("id")
+                .setSubject("subject")
+                .setIssuer("teste")
+                .setIssuedAt(createdAt)
+                .setExpiration(expiredAt);
+        claims.put("teste", "teste");
         when(usuarioRepository.findByEmail(dadosLogin.getEmail())).thenReturn(Optional.of(usuario));
-        //when(tokenService.decodeToken(token)).thenReturn();
+        when(tokenService.decodeToken(token)).thenReturn(claims);
 
         //act
         var usuarioRetorno = usuarioAuthService.autenticacao(dadosLogin, token);

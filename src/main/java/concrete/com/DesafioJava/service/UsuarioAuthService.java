@@ -36,7 +36,6 @@ public class UsuarioAuthService {
         } catch (Exception exception) {
             throw new RuntimeException("Erro ao realizar autenticação", exception);
         }
-
     }
 
     private boolean validacao(String token) {
