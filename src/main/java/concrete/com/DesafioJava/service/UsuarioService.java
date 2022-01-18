@@ -1,5 +1,6 @@
 package concrete.com.DesafioJava.service;
 
+import concrete.com.DesafioJava.service.interfaces.IUsuarioService;
 import org.springframework.stereotype.Service;
 
 import concrete.com.DesafioJava.model.Usuario;
@@ -10,7 +11,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 @Service
-public class UsuarioService {
+public class UsuarioService implements IUsuarioService {
 
     private UsuarioRepository _userRepository;
     private TokenService _tokenService;
@@ -20,13 +21,14 @@ public class UsuarioService {
         this._tokenService = tokenService;
     }
 
-    public Usuario Cadastro(Usuario usuario) {
+    public Object Cadastro(Usuario usuario) {
         try {
             StringBuilder mensagem = new StringBuilder();
             var validacao = Valida(usuario);
             if (validacao.stream().count() >= 1) {
-                validacao.forEach(mensagemErro -> usuario.setMensagensErros(mensagemErro));
-                return usuario;
+
+                validacao.forEach(mensagemErro -> mensagem.append( mensagemErro+" // "));
+                return mensagem;
             } else {
                 usuario.setToken(_tokenService.generateToken(usuario));
                 return _userRepository.save(usuario);
