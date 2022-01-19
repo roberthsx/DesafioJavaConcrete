@@ -1,6 +1,8 @@
 package concrete.com.DesafioJava.service;
 
+import concrete.com.DesafioJava.dto.UsuarioCadastroDTO;
 import concrete.com.DesafioJava.service.interfaces.IUsuarioService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import concrete.com.DesafioJava.model.Usuario;
@@ -9,6 +11,7 @@ import concrete.com.DesafioJava.repository.UsuarioRepository;
 import java.util.ArrayList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
 
 @Service
 public class UsuarioService implements IUsuarioService {

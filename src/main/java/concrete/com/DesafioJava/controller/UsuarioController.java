@@ -1,7 +1,10 @@
 package concrete.com.DesafioJava.controller;
 
 import concrete.com.DesafioJava.dto.ResponseDTO;
+import concrete.com.DesafioJava.mapper.ObjectMapperUtils;
 import concrete.com.DesafioJava.service.interfaces.IUsuarioService;
+import org.modelmapper.ModelMapper;
+import org.modelmapper.TypeMap;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,21 +20,30 @@ public class UsuarioController {
     @Autowired
     private IUsuarioService _usuarioService;
 
+    @Autowired
+    private ObjectMapperUtils modelMapper;
+
     public UsuarioController(IUsuarioService usuarioService) {
         this._usuarioService = usuarioService;
     }
+
 
     @PostMapping("/usuario")
     public ResponseEntity<ResponseDTO> CadastrarUsuario(@RequestBody UsuarioCadastroDTO usuarioCadastroDTO) {
         var responseResponseDTO = new ResponseDTO();
         try {
-            var usuario = _usuarioService.Cadastro(usuarioCadastroDTO.toUsuario());
-            if (usuario != null){
+
+            //TypeMap<UsuarioCadastroDTO, Usuario> propertyMapper = this.modelMapper.createTypeMap(UsuarioCadastroDTO.class, Usuario.class);
+            //propertyMapper.addMappings(mapper -> mapper.skip(Usuario::setId));
+
+            var teste = this.modelMapper.map(usuarioCadastroDTO, Usuario.class);
+            var usuario = _usuarioService.Cadastro(this.modelMapper.map(usuarioCadastroDTO, Usuario.class));
+            if (usuario != null) {
                 if (!usuario.getClass().getName().contains("Usuario")) {
                     responseResponseDTO.setMensagens((StringBuilder) usuario);
                     return new ResponseEntity(responseResponseDTO, HttpStatus.OK);
                 }
-                responseResponseDTO.setData(UsuarioAutenticadoDTO.toDTO((Usuario)usuario, "Bearer "));
+                responseResponseDTO.setData(UsuarioAutenticadoDTO.toDTO((Usuario) usuario, "Bearer "));
                 return new ResponseEntity<ResponseDTO>(responseResponseDTO, HttpStatus.CREATED);
             }
             return new ResponseEntity<ResponseDTO>(responseResponseDTO, HttpStatus.OK);
