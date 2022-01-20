@@ -18,8 +18,6 @@ public class Usuario {
     @Column(name = "token", nullable = false)
     private String token;
 
-    private StringBuilder MensagensErros;
-
     public Usuario() {
     }
 
@@ -28,14 +26,14 @@ public class Usuario {
         this.nome = nome;
         this.email = email;
         this.senha = senha;
-        this.MensagensErros = new StringBuilder();
+        this.token = "";
     }
 
     public Usuario(String nome, String email, String senha) {
         this.nome = nome;
         this.email = email;
         this.senha = senha;
-        this.MensagensErros = new StringBuilder();
+        this.token = "";
     }
 
     public String getNome() {
@@ -78,11 +76,4 @@ public class Usuario {
         return token;
     }
 
-    public StringBuilder getMensagensErros() {
-        return MensagensErros;
-    }
-
-    public void setMensagensErros(String mensagem) {
-        this.MensagensErros.append(mensagem);
-    }
 }

@@ -4,14 +4,10 @@ import com.fasterxml.jackson.annotation.JsonAutoDetect;
 
 import concrete.com.DesafioJava.model.Usuario;
 
-import java.util.ArrayList;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
-@JsonAutoDetect(fieldVisibility= JsonAutoDetect.Visibility.ANY)
+@JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY)
 public class UsuarioCadastroDTO {
 
-	private Long id;
+    private Long id;
     private String nome;
     private String email;
     private String senha;

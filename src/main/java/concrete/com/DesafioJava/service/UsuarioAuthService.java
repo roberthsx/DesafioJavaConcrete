@@ -1,31 +1,31 @@
 package concrete.com.DesafioJava.service;
 
-
+import concrete.com.DesafioJava.exception.ExistingEmailException;
+import concrete.com.DesafioJava.exception.ExpiredTokenException;
+import concrete.com.DesafioJava.exception.InvalidLoginException;
+import concrete.com.DesafioJava.model.DadosLogin;
+import concrete.com.DesafioJava.model.Usuario;
+import concrete.com.DesafioJava.repository.UsuarioRepository;
+import concrete.com.DesafioJava.service.interfaces.IUsuarioAuthService;
 import io.jsonwebtoken.Claims;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
 
-import concrete.com.DesafioJava.repository.UsuarioRepository;
-import concrete.com.DesafioJava.dto.DadosLogin;
-import concrete.com.DesafioJava.exception.ExistingEmailException;
-import concrete.com.DesafioJava.exception.ExpiredTokenException;
-import concrete.com.DesafioJava.exception.InvalidLoginException;
-import concrete.com.DesafioJava.model.Usuario;
-
 @Service
-public class UsuarioAuthService {
+public class UsuarioAuthService implements IUsuarioAuthService {
 
     private final UsuarioRepository _usuarioRepository;
     private final TokenService _tokenService;
-
 
     public UsuarioAuthService(UsuarioRepository usuarioRepository, TokenService tokenService) {
         this._usuarioRepository = usuarioRepository;
         this._tokenService = tokenService;
     }
 
-    public Usuario autenticacao(DadosLogin dados, String token) {
+    public Object autenticacao(DadosLogin dados, String token) {
+
+        StringBuilder mensagemErro = new StringBuilder();
         try {
             Usuario usuario = _usuarioRepository.findByEmail(dados.getEmail()).orElseThrow(ExistingEmailException::new);
             if (dados.getSenha().equals(usuario.getSenha()) && !token.isEmpty() && validacao(token)) {

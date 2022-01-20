@@ -1,7 +1,6 @@
 package concrete.com.DesafioJava.service.usuarioFactory;
 
-import concrete.com.DesafioJava.dto.DadosLogin;
-import concrete.com.DesafioJava.dto.UsuarioCadastroDTO;
+import concrete.com.DesafioJava.model.DadosLogin;
 import concrete.com.DesafioJava.model.Usuario;
 
 public class UsuarioAuthFactory {
