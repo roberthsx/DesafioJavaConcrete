@@ -1,8 +1,8 @@
-package concrete.com.DesafioJava.dto;
+package concrete.com.DesafioJava.model;
 
 public class DadosLogin {
-	
-	private String email;
+
+    private String email;
     private String senha;
 
     public DadosLogin(String email, String senha) {

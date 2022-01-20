@@ -1,12 +1,9 @@
 package concrete.com.DesafioJava.service;
 
-import concrete.com.DesafioJava.dto.UsuarioCadastroDTO;
-import concrete.com.DesafioJava.service.interfaces.IUsuarioService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
 import concrete.com.DesafioJava.model.Usuario;
 import concrete.com.DesafioJava.repository.UsuarioRepository;
+import concrete.com.DesafioJava.service.interfaces.IUsuarioService;
+import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.regex.Matcher;
@@ -25,12 +22,14 @@ public class UsuarioService implements IUsuarioService {
     }
 
     public Object Cadastro(Usuario usuario) {
+
         try {
+
             StringBuilder mensagem = new StringBuilder();
             var validacao = Valida(usuario);
-            if (validacao.stream().count() >= 1) {
 
-                validacao.forEach(mensagemErro -> mensagem.append( mensagemErro+" // "));
+            if (validacao.stream().count() >= 1) {
+                validacao.forEach(mensagemErro -> mensagem.append(mensagemErro + " // "));
                 return mensagem;
             } else {
                 usuario.setToken(_tokenService.generateToken(usuario));
@@ -42,6 +41,7 @@ public class UsuarioService implements IUsuarioService {
     }
 
     public ArrayList<String> Valida(Usuario usuario) {
+
         var mensagens = new ArrayList<String>();
         mensagens.addAll(validaObrigatorios(usuario));
 
@@ -53,23 +53,29 @@ public class UsuarioService implements IUsuarioService {
     }
 
     private ArrayList<String> validaObrigatorios(Usuario usuario) {
+
         var mensagens = new ArrayList<String>();
         if (!validaUsuario(usuario)) {
             mensagens.add("Usuário é obrigatório.");
         }
+
         if (!validaSenha(usuario)) {
             mensagens.add("Senha é obrigatório.");
         }
+
         if (!validaEmail(usuario)) {
             mensagens.add("Email é obrigatório.");
         }
+
         return mensagens;
     }
 
     private boolean validaUsuario(Usuario usuario) {
+
         if (usuario.getNome() != null && usuario.getNome() != "") {
             return true;
         }
+
         return false;
     }
 
@@ -78,6 +84,7 @@ public class UsuarioService implements IUsuarioService {
         if (usuario.getSenha() != null && usuario.getSenha() != "") {
             return true;
         }
+
         return false;
     }
 
@@ -86,6 +93,7 @@ public class UsuarioService implements IUsuarioService {
         if (usuario.getEmail() != null && usuario.getEmail() != "") {
             return true;
         }
+
         return false;
     }
 
@@ -94,9 +102,11 @@ public class UsuarioService implements IUsuarioService {
         String expression = "^[\\w\\.-]+@([\\w\\-]+\\.)+[A-Z]{2,4}$";
         Pattern pattern = Pattern.compile(expression, Pattern.CASE_INSENSITIVE);
         Matcher matcher = pattern.matcher(usuario.getEmail());
+
         if (matcher.matches()) {
             return true;
         }
+
         return false;
     }
 }
