@@ -22,7 +22,6 @@ public class UsuarioService implements IUsuarioService {
     }
 
     public Object Cadastro(Usuario usuario) {
-
         try {
 
             StringBuilder mensagem = new StringBuilder();
@@ -60,7 +59,7 @@ public class UsuarioService implements IUsuarioService {
         }
 
         if (!validaSenha(usuario)) {
-            mensagens.add("Senha é obrigatório.");
+            mensagens.add("Senha é obrigatória.");
         }
 
         if (!validaEmail(usuario)) {

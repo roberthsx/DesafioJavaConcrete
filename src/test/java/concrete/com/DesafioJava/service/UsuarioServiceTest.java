@@ -1,6 +1,5 @@
 package concrete.com.DesafioJava.service;
 
-import concrete.com.DesafioJava.dto.UsuarioCadastroDTO;
 import concrete.com.DesafioJava.model.Usuario;
 import concrete.com.DesafioJava.repository.UsuarioRepository;
 import org.junit.jupiter.api.Assertions;
@@ -35,7 +34,8 @@ public class UsuarioServiceTest {
     public void init() {
 
         MockitoAnnotations.openMocks(this);
-        token ="eyJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE2NDE5OTAyOTUsInN1YiI6IlRlc3RlIEpXVCBBUEkiLCJleHAiOjE2NDE5OTIwOTV9.e3drFCO4E2IWvrUrqmujL5fXlwR1ArMVcef3qAjs84c";
+        token = "Bearer eyJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE2NDE5OTAyOTUsInN1YiI6IlRlc3RlIEpXVCBBUEkiLCJleHAiOjE2NDE5OTIwO" +
+                "TV9.e3drFCO4E2IWvrUrqmujL5fXlwR1ArMVcef3qAjs84c";
     }
 
     @Test
@@ -73,12 +73,13 @@ public class UsuarioServiceTest {
     {
         //arrange
         Usuario usuario = usuarioCadastroDtoEmailVazio();
+        var esperado ="Email é obrigatório. // Email inválido. // ";
 
         //act
-        usuarioService.Cadastro(usuario);
+        var result =usuarioService.Cadastro(usuario);
 
         //assert
-        verify(usuarioRepository, times(1)).save(usuario);
+        Assertions.assertEquals(esperado, result.toString());
     }
 
     @Test
@@ -86,12 +87,13 @@ public class UsuarioServiceTest {
     {
         //arrange
         Usuario usuario = usuarioCadastroDtoEmailInvalido();
+        var esperado ="Email inválido. // ";
 
         //act
-        usuarioService.Cadastro(usuario);
+        var result= usuarioService.Cadastro(usuario);
 
         //assert
-        verify(usuarioRepository, times(1)).save(usuario);
+        Assertions.assertEquals(esperado, result.toString());
     }
 
     @Test
@@ -99,24 +101,26 @@ public class UsuarioServiceTest {
     {
         //arrange
         Usuario usuario = usuarioCadastroDtoNomeVazio();
+        var esperado ="Usuário é obrigatório. // ";
 
         //act
-        usuarioService.Cadastro(usuario);
+        var result = usuarioService.Cadastro(usuario);
 
         //assert
-        verify(usuarioRepository, times(1)).save(usuario);
+        Assertions.assertEquals(esperado, result.toString());
     }
 
     @Test
-    void testCadastroUsuario_QuandoSenhaVazio_RetornaMensagem()
+    void testCadastroUsuario_QuandoSenhaVazia_RetornaMensagem()
     {
         //arrange
         Usuario usuario = usuarioCadastroDtoSenhaVazio();
+        var esperado ="Senha é obrigatória. // ";
 
         //act
-        usuarioService.Cadastro(usuario);
+        var result = usuarioService.Cadastro(usuario);
 
         //assert
-        verify(usuarioRepository, times(1)).save(usuario);
+        Assertions.assertEquals(esperado, result.toString());
     }
 }
