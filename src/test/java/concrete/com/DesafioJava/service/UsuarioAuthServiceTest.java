@@ -1,6 +1,5 @@
 package concrete.com.DesafioJava.service;
 
-import concrete.com.DesafioJava.dto.DadosLoginDTO;
 import concrete.com.DesafioJava.model.DadosLogin;
 import concrete.com.DesafioJava.model.Usuario;
 import concrete.com.DesafioJava.repository.UsuarioRepository;
@@ -28,8 +27,7 @@ public class UsuarioAuthServiceTest {
     @InjectMocks
     UsuarioAuthService usuarioAuthService;
 
-    @Spy
-    @InjectMocks
+    @Mock
     TokenService tokenService;
 
     @Mock
@@ -41,12 +39,11 @@ public class UsuarioAuthServiceTest {
     public void init() {
 
         MockitoAnnotations.openMocks(this);
-        //token = "eyJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE2NDE5OTAyOTUsInN1YiI6IlRlc3RlIEpXVCBBUEkiLCJleHAiOjE2NDE5OTIwOTV9.uTaO_7RMWqdr3voFpdSmW-3e8ORCM6c4EAB4xij7zjk";
         token = Jwts.builder()
                 .setIssuedAt(new Date(System.currentTimeMillis()))
-                .setSubject("roberthsx")
+                .setSubject("Teste")
                 .setExpiration(new Date(System.currentTimeMillis() + 1800000))
-                .signWith(SignatureAlgorithm.HS256, "testeApi")
+                .signWith(SignatureAlgorithm.HS256, "DesafioConcrete")
                 .compact();
     }
 
@@ -55,27 +52,17 @@ public class UsuarioAuthServiceTest {
         //arrange
         DadosLogin dadosLogin = DadosLoginSimples();
         Usuario usuario = UsuarioSimples();
-        Date now = new Date();
-        Date createdAt = new Date(now.getTime());
-        // Expired in 10 minutes
-        Date expiredAt = new Date(now.getTime() + 10 * 60 * 1000);
-        Claims claims = new DefaultClaims()
-                .setId("id")
-                .setSubject("subject")
-                .setIssuer("teste")
-                .setIssuedAt(createdAt)
-                .setExpiration(expiredAt);
-        claims.put("teste", "teste");
+        Claims claims = new DefaultClaims();
+        claims.setExpiration(new Date(System.currentTimeMillis() + 1800000));
         when(usuarioRepository.findByEmail(dadosLogin.getEmail())).thenReturn(Optional.of(usuario));
         when(tokenService.decodeToken(token)).thenReturn(claims);
 
         //act
-        var usuarioRetorno = usuarioAuthService.autenticacao(dadosLogin, token);
+        var usuarioRetorno = (Usuario) usuarioAuthService.autenticacao(dadosLogin, token);
 
         //assert
-        //Assertions.assertEquals(dadosLogin.getSenha(), usuarioRetorno.getSenha());
-        //Assertions.assertEquals(dadosLogin.getEmail(), usuarioRetorno.getEmail());
-        //Assertions.assertEquals(token, usuarioRetorno.getToken());
+        Assertions.assertEquals(dadosLogin.getSenha(), usuarioRetorno.getSenha());
+        Assertions.assertEquals(dadosLogin.getEmail(), usuarioRetorno.getEmail());
     }
 
     @Test
@@ -117,6 +104,46 @@ public class UsuarioAuthServiceTest {
         String expectedMessage2 = "Login Inválido.";
 
         when(usuarioRepository.findByEmail(dadosLogin.getEmail())).thenReturn(Optional.of(usuario));
+
+        //act
+        Exception exception = assertThrows(RuntimeException.class, () -> usuarioAuthService.autenticacao(dadosLogin, token));
+
+        //assert
+        Assertions.assertEquals(expectedMessage, exception.getMessage());
+        Assertions.assertEquals(expectedMessage2, exception.getCause().getMessage());
+    }
+
+    @Test
+    void testAutenticacaoUsuario_Quando_Ao_Validar_Token_Retorna_ExpirationException() {
+        //arrange
+        DadosLogin dadosLogin = DadosLoginSimples();
+        Usuario usuario = UsuarioSimples();
+        Claims claims = new DefaultClaims();
+        claims.setExpiration(new Date(System.currentTimeMillis() + 1));
+        when(usuarioRepository.findByEmail(dadosLogin.getEmail())).thenReturn(Optional.of(usuario));
+        when(tokenService.decodeToken(token)).thenReturn(claims);
+        String expectedMessage = "Erro ao realizar autenticação";
+        String expectedMessage2 = "Erro ao validar Usuario, Token Expirado";
+
+        //act
+        Exception exception = assertThrows(RuntimeException.class, () -> usuarioAuthService.autenticacao(dadosLogin, token));
+
+        //assert
+        Assertions.assertEquals(expectedMessage, exception.getMessage());
+        Assertions.assertEquals(expectedMessage2, exception.getCause().getMessage());
+    }
+
+    @Test
+    void testAutenticacaoUsuario_Quando_Ao_Validar_Token_Encontra_Erro_No_Servico_Retorna_Exception() {
+        //arrange
+        DadosLogin dadosLogin = DadosLoginSimples();
+        Usuario usuario = UsuarioSimples();
+        Claims claims = new DefaultClaims();
+        claims.setExpiration(new Date(System.currentTimeMillis() + 1));
+        when(usuarioRepository.findByEmail(dadosLogin.getEmail())).thenReturn(Optional.of(usuario));
+        when(tokenService.decodeToken(token)).thenThrow(new RuntimeException("erro de processamento"));
+        String expectedMessage = "Erro ao realizar autenticação";
+        String expectedMessage2 = "Erro ao validar Usuario";
 
         //act
         Exception exception = assertThrows(RuntimeException.class, () -> usuarioAuthService.autenticacao(dadosLogin, token));
