@@ -1,7 +1,8 @@
 package concrete.com.DesafioJava.service;
 
 import concrete.com.DesafioJava.model.Usuario;
-import concrete.com.DesafioJava.repository.UsuarioRepository;
+import concrete.com.DesafioJava.repository.IUsuarioRepository;
+import concrete.com.DesafioJava.service.interfaces.ITokenService;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -9,7 +10,6 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
-import org.mockito.Spy;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import static concrete.com.DesafioJava.service.usuarioFactory.UsuarioFactory.*;
@@ -22,12 +22,12 @@ public class UsuarioServiceTest {
     @InjectMocks
     UsuarioService usuarioService;
 
-    @Spy
-    @InjectMocks
-    TokenService tokenService;
+    @Mock
+    ITokenService tokenService;
 
     @Mock
-    UsuarioRepository usuarioRepository;
+    IUsuarioRepository usuarioRepository;
+
     private  String token;
 
     @BeforeEach

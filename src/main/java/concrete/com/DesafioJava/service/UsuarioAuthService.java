@@ -5,7 +5,8 @@ import concrete.com.DesafioJava.exception.ExpiredTokenException;
 import concrete.com.DesafioJava.exception.InvalidLoginException;
 import concrete.com.DesafioJava.model.DadosLogin;
 import concrete.com.DesafioJava.model.Usuario;
-import concrete.com.DesafioJava.repository.UsuarioRepository;
+import concrete.com.DesafioJava.repository.IUsuarioRepository;
+import concrete.com.DesafioJava.service.interfaces.ITokenService;
 import concrete.com.DesafioJava.service.interfaces.IUsuarioAuthService;
 import io.jsonwebtoken.Claims;
 import org.springframework.stereotype.Service;
@@ -15,11 +16,11 @@ import java.util.Date;
 @Service
 public class UsuarioAuthService implements IUsuarioAuthService {
 
-    private final UsuarioRepository _usuarioRepository;
-    private final TokenService _tokenService;
+    private final IUsuarioRepository _usuarioRepository;
+    private final ITokenService _tokenService;
 
-    public UsuarioAuthService(UsuarioRepository usuarioRepository, TokenService tokenService) {
-        this._usuarioRepository = usuarioRepository;
+    public UsuarioAuthService(IUsuarioRepository IUsuarioRepository, ITokenService tokenService) {
+        this._usuarioRepository = IUsuarioRepository;
         this._tokenService = tokenService;
     }
 
