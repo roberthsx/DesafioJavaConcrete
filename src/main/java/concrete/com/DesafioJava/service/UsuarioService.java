@@ -1,7 +1,8 @@
 package concrete.com.DesafioJava.service;
 
 import concrete.com.DesafioJava.model.Usuario;
-import concrete.com.DesafioJava.repository.UsuarioRepository;
+import concrete.com.DesafioJava.repository.IUsuarioRepository;
+import concrete.com.DesafioJava.service.interfaces.ITokenService;
 import concrete.com.DesafioJava.service.interfaces.IUsuarioService;
 import org.springframework.stereotype.Service;
 
@@ -13,10 +14,10 @@ import java.util.regex.Pattern;
 @Service
 public class UsuarioService implements IUsuarioService {
 
-    private UsuarioRepository _userRepository;
-    private TokenService _tokenService;
+    private IUsuarioRepository _userRepository;
+    private ITokenService _tokenService;
 
-    public UsuarioService(UsuarioRepository userRepository, TokenService tokenService) {
+    public UsuarioService(IUsuarioRepository userRepository, ITokenService tokenService) {
         this._userRepository = userRepository;
         this._tokenService = tokenService;
     }

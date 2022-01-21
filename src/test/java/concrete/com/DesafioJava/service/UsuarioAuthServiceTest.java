@@ -2,7 +2,8 @@ package concrete.com.DesafioJava.service;
 
 import concrete.com.DesafioJava.model.DadosLogin;
 import concrete.com.DesafioJava.model.Usuario;
-import concrete.com.DesafioJava.repository.UsuarioRepository;
+import concrete.com.DesafioJava.repository.IUsuarioRepository;
+import concrete.com.DesafioJava.service.interfaces.ITokenService;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
@@ -10,10 +11,11 @@ import io.jsonwebtoken.impl.DefaultClaims;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
-import org.mockito.Spy;
+import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.Date;
 import java.util.Optional;
@@ -22,16 +24,17 @@ import static concrete.com.DesafioJava.service.usuarioFactory.UsuarioAuthFactory
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.when;
 
+@ExtendWith(MockitoExtension.class)
 public class UsuarioAuthServiceTest {
 
     @InjectMocks
     UsuarioAuthService usuarioAuthService;
 
     @Mock
-    TokenService tokenService;
+    ITokenService tokenService;
 
     @Mock
-    UsuarioRepository usuarioRepository;
+    IUsuarioRepository usuarioRepository;
 
     private String token;
 
@@ -140,7 +143,7 @@ public class UsuarioAuthServiceTest {
         Usuario usuario = UsuarioSimples();
         Claims claims = new DefaultClaims();
         claims.setExpiration(new Date(System.currentTimeMillis() + 1));
-        when(usuarioRepository.findByEmail(dadosLogin.getEmail())).thenReturn(Optional.of(usuario));
+        when(usuarioRepository.findByEmail("teste1@test.com")).thenReturn(Optional.of(usuario));
         when(tokenService.decodeToken(token)).thenThrow(new RuntimeException("erro de processamento"));
         String expectedMessage = "Erro ao realizar autenticação";
         String expectedMessage2 = "Erro ao validar Usuario";

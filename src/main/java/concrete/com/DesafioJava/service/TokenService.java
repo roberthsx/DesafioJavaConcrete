@@ -2,6 +2,7 @@ package concrete.com.DesafioJava.service;
 
 import java.util.Date;
 
+import concrete.com.DesafioJava.service.interfaces.ITokenService;
 import org.springframework.stereotype.Service;
 import concrete.com.DesafioJava.model.Usuario;
 import io.jsonwebtoken.Claims;
@@ -9,7 +10,7 @@ import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 
 @Service
-public class TokenService {
+public class TokenService implements ITokenService {
 
     private String key = "DesafioConcrete";
     //30 minutos

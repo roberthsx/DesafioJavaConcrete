@@ -4,25 +4,20 @@ import concrete.com.DesafioJava.model.Usuario;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
-import org.mockito.MockitoAnnotations;
+import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.Date;
 
 import static concrete.com.DesafioJava.service.usuarioFactory.UsuarioAuthFactory.UsuarioSimples;
 
+@ExtendWith(MockitoExtension.class)
 public class TokenServiceTest {
 
     @InjectMocks
     TokenService tokenService;
-
-    @BeforeEach
-    public void init() {
-        MockitoAnnotations.openMocks(this);
-
-    }
 
     @Test
     void testGenerateToken_Retorno_Token() {
