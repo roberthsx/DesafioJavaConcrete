@@ -9,6 +9,7 @@ import concrete.com.DesafioJava.repository.IUsuarioRepository;
 import concrete.com.DesafioJava.service.interfaces.ITokenService;
 import concrete.com.DesafioJava.service.interfaces.IUsuarioAuthService;
 import io.jsonwebtoken.Claims;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
@@ -19,14 +20,13 @@ public class UsuarioAuthService implements IUsuarioAuthService {
     private final IUsuarioRepository _usuarioRepository;
     private final ITokenService _tokenService;
 
-    public UsuarioAuthService(IUsuarioRepository IUsuarioRepository, ITokenService tokenService) {
-        this._usuarioRepository = IUsuarioRepository;
+    @Autowired
+    public UsuarioAuthService(IUsuarioRepository usuarioRepository, ITokenService tokenService) {
+        this._usuarioRepository = usuarioRepository;
         this._tokenService = tokenService;
     }
 
     public Object autenticacao(DadosLogin dados, String token) {
-
-        StringBuilder mensagemErro = new StringBuilder();
         try {
             Usuario usuario = _usuarioRepository.findByEmail(dados.getEmail()).orElseThrow(ExistingEmailException::new);
             if (dados.getSenha().equals(usuario.getSenha()) && !token.isEmpty() && validacao(token)) {
