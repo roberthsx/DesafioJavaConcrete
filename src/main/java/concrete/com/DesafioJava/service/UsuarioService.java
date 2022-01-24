@@ -4,6 +4,7 @@ import concrete.com.DesafioJava.model.Usuario;
 import concrete.com.DesafioJava.repository.IUsuarioRepository;
 import concrete.com.DesafioJava.service.interfaces.ITokenService;
 import concrete.com.DesafioJava.service.interfaces.IUsuarioService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -14,11 +15,12 @@ import java.util.regex.Pattern;
 @Service
 public class UsuarioService implements IUsuarioService {
 
-    private IUsuarioRepository _userRepository;
-    private ITokenService _tokenService;
+    private final IUsuarioRepository _usuarioRepository;
+    private final ITokenService _tokenService;
 
-    public UsuarioService(IUsuarioRepository userRepository, ITokenService tokenService) {
-        this._userRepository = userRepository;
+    @Autowired
+    public UsuarioService(IUsuarioRepository ususarioRepository, ITokenService tokenService) {
+        this._usuarioRepository = ususarioRepository;
         this._tokenService = tokenService;
     }
 
@@ -33,7 +35,7 @@ public class UsuarioService implements IUsuarioService {
                 return mensagem;
             } else {
                 usuario.setToken(_tokenService.generateToken(usuario));
-                return _userRepository.save(usuario);
+                return _usuarioRepository.save(usuario);
             }
         } catch (Exception exception) {
             throw new RuntimeException("Erro ao cadastrar Usuario.", exception);
