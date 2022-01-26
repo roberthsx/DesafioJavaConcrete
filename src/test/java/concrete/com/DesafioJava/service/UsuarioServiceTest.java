@@ -1,8 +1,8 @@
 package concrete.com.DesafioJava.service;
 
 import concrete.com.DesafioJava.model.Usuario;
-import concrete.com.DesafioJava.repository.IUsuarioRepository;
-import concrete.com.DesafioJava.service.interfaces.ITokenService;
+import concrete.com.DesafioJava.repository.UsuarioRepository;
+import concrete.com.DesafioJava.service.interfaces.TokenService;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -20,13 +20,13 @@ import static org.mockito.Mockito.*;
 public class UsuarioServiceTest {
 
     @InjectMocks
-    UsuarioService usuarioService;
+    UsuarioServiceImpl usuarioService;
 
     @Mock
-    ITokenService tokenService;
+    TokenService tokenService;
 
     @Mock
-    IUsuarioRepository usuarioRepository;
+    UsuarioRepository usuarioRepository;
 
     private  String token;
 

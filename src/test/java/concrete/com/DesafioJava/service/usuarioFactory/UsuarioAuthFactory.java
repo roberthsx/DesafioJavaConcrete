@@ -16,4 +16,5 @@ public class UsuarioAuthFactory {
     public static Usuario UsuarioLoginInvalido(){
         return new Usuario("Teste1","teste1@test.com","teste");
     }
+
 }
