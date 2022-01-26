@@ -4,7 +4,10 @@ import concrete.com.DesafioJava.model.Usuario;
 
 import java.util.ArrayList;
 
-public interface IUsuarioService {
+public interface UsuarioService {
+
     Object Cadastro(Usuario usuario);
+
     ArrayList<String> Valida(Usuario usuario);
+
 }

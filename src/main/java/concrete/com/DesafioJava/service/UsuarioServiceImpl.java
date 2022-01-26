@@ -1,10 +1,16 @@
 package concrete.com.DesafioJava.service;
 
 import concrete.com.DesafioJava.model.Usuario;
+<<<<<<< HEAD:src/main/java/concrete/com/DesafioJava/service/UsuarioServiceImpl.java
+import concrete.com.DesafioJava.repository.UsuarioRepository;
+import concrete.com.DesafioJava.service.interfaces.TokenService;
+import concrete.com.DesafioJava.service.interfaces.UsuarioService;
+=======
 import concrete.com.DesafioJava.repository.IUsuarioRepository;
 import concrete.com.DesafioJava.service.interfaces.ITokenService;
 import concrete.com.DesafioJava.service.interfaces.IUsuarioService;
 import org.springframework.beans.factory.annotation.Autowired;
+>>>>>>> main:src/main/java/concrete/com/DesafioJava/service/UsuarioService.java
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -13,14 +19,22 @@ import java.util.regex.Pattern;
 
 
 @Service
-public class UsuarioService implements IUsuarioService {
+public class UsuarioServiceImpl implements UsuarioService {
 
+<<<<<<< HEAD:src/main/java/concrete/com/DesafioJava/service/UsuarioServiceImpl.java
+    private UsuarioRepository _userRepository;
+    private TokenService _tokenService;
+
+    public UsuarioServiceImpl(UsuarioRepository userRepository, TokenService tokenService) {
+        this._userRepository = userRepository;
+=======
     private final IUsuarioRepository _usuarioRepository;
     private final ITokenService _tokenService;
 
     @Autowired
     public UsuarioService(IUsuarioRepository ususarioRepository, ITokenService tokenService) {
         this._usuarioRepository = ususarioRepository;
+>>>>>>> main:src/main/java/concrete/com/DesafioJava/service/UsuarioService.java
         this._tokenService = tokenService;
     }
 

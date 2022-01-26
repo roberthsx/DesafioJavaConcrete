@@ -3,7 +3,7 @@ package concrete.com.DesafioJava.controller;
 import concrete.com.DesafioJava.dto.ResponseDTO;
 import concrete.com.DesafioJava.mapper.ObjectMapperUtils;
 import concrete.com.DesafioJava.model.DadosLogin;
-import concrete.com.DesafioJava.service.interfaces.IUsuarioAuthService;
+import concrete.com.DesafioJava.service.interfaces.UsuarioAuthService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -20,12 +20,12 @@ import concrete.com.DesafioJava.model.Usuario;
 public class AuthController {
 
     @Autowired
-    private IUsuarioAuthService _usuarioAutenticacaoService;
+    private UsuarioAuthService _usuarioAutenticacaoService;
 
     @Autowired
     private ObjectMapperUtils modelMapper;
 
-    public AuthController(IUsuarioAuthService usuarioAutenticacaoService) {
+    public AuthController(UsuarioAuthService usuarioAutenticacaoService) {
         this._usuarioAutenticacaoService = usuarioAutenticacaoService;
     }
 
@@ -36,7 +36,7 @@ public class AuthController {
             var usuario = _usuarioAutenticacaoService.autenticacao(modelMapper.map(dadosLoginDTO, DadosLogin.class), Authorization);
             if (usuario != null) {
                 if (!usuario.getClass().getName().contains("Usuario")) {
-                    responseResponseDTO.setMensagens((StringBuilder)usuario);
+                    responseResponseDTO.setMensagens((StringBuilder) usuario);
                     return new ResponseEntity(responseResponseDTO, HttpStatus.OK);
                 }
                 responseResponseDTO.setData(UsuarioAutenticadoDTO.toDTO((Usuario) usuario, "Bearer "));

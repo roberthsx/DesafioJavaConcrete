@@ -9,7 +9,8 @@ public class DadosLogin {
         this.email = email;
         this.senha = senha;
     }
-    public DadosLogin(){
+
+    public DadosLogin() {
 
     }
 
