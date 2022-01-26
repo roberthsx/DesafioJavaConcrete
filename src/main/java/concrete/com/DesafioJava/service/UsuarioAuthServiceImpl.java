@@ -1,5 +1,6 @@
 package concrete.com.DesafioJava.service;
 
+import concrete.com.DesafioJava.exception.ExistingEmailException;
 import concrete.com.DesafioJava.exception.ExpiredTokenException;
 import concrete.com.DesafioJava.exception.InvalidLoginException;
 import concrete.com.DesafioJava.model.DadosLogin;
@@ -20,23 +21,16 @@ public class UsuarioAuthServiceImpl implements UsuarioAuthService {
     private final UsuarioRepository _usuarioRepository;
     private final TokenService _tokenService;
 
-<<<<<<< HEAD:src/main/java/concrete/com/DesafioJava/service/UsuarioAuthServiceImpl.java
-    public UsuarioAuthServiceImpl(UsuarioRepository UsuarioRepository, TokenService tokenService) {
-        this._usuarioRepository = UsuarioRepository;
-=======
-    @Autowired
-    public UsuarioAuthService(IUsuarioRepository usuarioRepository, ITokenService tokenService) {
+    public UsuarioAuthServiceImpl(UsuarioRepository usuarioRepository, TokenService tokenService) {
         this._usuarioRepository = usuarioRepository;
->>>>>>> main:src/main/java/concrete/com/DesafioJava/service/UsuarioAuthService.java
         this._tokenService = tokenService;
     }
 
     public Object autenticacao(DadosLogin dados, String token) {
         try {
-            Optional<Usuario> usuario = _usuarioRepository.findByEmail(dados.getEmail());
-            //.orElseThrow(ExistingEmailException::new);
+            Usuario usuario = _usuarioRepository.findByEmail(dados.getEmail()).orElseThrow(ExistingEmailException::new);
 
-            if (dados.getSenha().equals(usuario.get()) && !token.isEmpty() && validacao(token)) {
+            if (dados.getSenha().equals(usuario.getSenha()) && !token.isEmpty() && validacao(token)) {
                 return usuario;
             } else {
                 throw new InvalidLoginException();
