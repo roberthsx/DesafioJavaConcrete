@@ -55,7 +55,7 @@ public class UsuarioControllerTest {
         Usuario usuario = usuarioCadastroDTO.toUsuario();
         var usuarioRetorno = new Usuario(usuario.getNome(), usuario.getEmail(), usuario.getSenha());
         usuarioRetorno.setToken(token);
-        usuarioRetorno.setId(new Long(1));
+        usuarioRetorno.setId((long)1);
         when(modelMapper.map(any(), any())).thenReturn(usuario);
         when(usuarioService.Cadastro(usuario)).thenReturn(usuarioRetorno);
 

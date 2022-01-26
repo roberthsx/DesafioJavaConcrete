@@ -16,13 +16,22 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
 
 import java.util.Date;
 import java.util.Optional;
 
 import static concrete.com.DesafioJava.service.usuarioFactory.UsuarioAuthFactory.*;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+<<<<<<< HEAD
 import static org.mockito.Mockito.*;
+=======
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
+>>>>>>> main
 
 @ExtendWith(MockitoExtension.class)
 public class UsuarioAuthServiceTest {
@@ -42,7 +51,12 @@ public class UsuarioAuthServiceTest {
     public void init() {
 
         MockitoAnnotations.openMocks(this);
+<<<<<<< HEAD
 
+=======
+        Usuario usuario = UsuarioSimples();
+        when(usuarioRepository.findByEmail(any(String.class))).thenReturn(Optional.of(usuario));
+>>>>>>> main
         token = Jwts.builder()
                 .setIssuedAt(new Date(System.currentTimeMillis()))
                 .setSubject("Teste")
@@ -142,10 +156,14 @@ public class UsuarioAuthServiceTest {
         //arrange
         DadosLogin dadosLogin = DadosLoginSimples();
         Usuario usuario = UsuarioSimples();
+<<<<<<< HEAD
         Claims claims = new DefaultClaims();
         claims.setExpiration(new Date(System.currentTimeMillis() + 1));
 
         when(usuarioRepository.findByEmail("teste1@test.com")).thenReturn(Optional.of(usuario));
+=======
+        when(usuarioRepository.findByEmail(any(String.class))).thenReturn(Optional.of(usuario));
+>>>>>>> main
         when(tokenService.decodeToken(token)).thenThrow(new RuntimeException("erro de processamento"));
 
         String expectedMessage = "Erro ao realizar autenticação";
@@ -158,5 +176,6 @@ public class UsuarioAuthServiceTest {
         verify(usuarioRepository).findByEmail("teste1@test.com");
         Assertions.assertEquals(expectedMessage, exception.getMessage());
         Assertions.assertEquals(expectedMessage2, exception.getCause().getMessage());
+        verify(usuarioRepository).findByEmail("first");
     }
 }
