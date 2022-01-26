@@ -4,7 +4,7 @@ import concrete.com.DesafioJava.dto.ResponseDTO;
 import concrete.com.DesafioJava.dto.UsuarioCadastroDTO;
 import concrete.com.DesafioJava.mapper.ObjectMapperUtils;
 import concrete.com.DesafioJava.model.Usuario;
-import concrete.com.DesafioJava.service.interfaces.IUsuarioService;
+import concrete.com.DesafioJava.service.interfaces.UsuarioService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
@@ -32,7 +32,7 @@ public class UsuarioControllerTest {
     private TestRestTemplate testRestTemplate;
 
     @MockBean
-    private IUsuarioService usuarioService;
+    private UsuarioService usuarioService;
 
     @MockBean
     private ObjectMapperUtils modelMapper;

@@ -17,7 +17,7 @@ import static concrete.com.DesafioJava.service.usuarioFactory.UsuarioAuthFactory
 public class TokenServiceTest {
 
     @InjectMocks
-    TokenService tokenService;
+    TokenServiceImpl tokenService;
 
     @Test
     void testGenerateToken_Retorno_Token() {

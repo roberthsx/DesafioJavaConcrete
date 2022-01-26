@@ -2,7 +2,7 @@ package concrete.com.DesafioJava.controller;
 
 import concrete.com.DesafioJava.dto.ResponseDTO;
 import concrete.com.DesafioJava.mapper.ObjectMapperUtils;
-import concrete.com.DesafioJava.service.interfaces.IUsuarioService;
+import concrete.com.DesafioJava.service.interfaces.UsuarioService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,12 +16,12 @@ import concrete.com.DesafioJava.model.Usuario;
 public class UsuarioController {
 
     @Autowired
-    private IUsuarioService _usuarioService;
+    private UsuarioService _usuarioService;
 
     @Autowired
     private ObjectMapperUtils modelMapper;
 
-    public UsuarioController(IUsuarioService usuarioService) {
+    public UsuarioController(UsuarioService usuarioService) {
         this._usuarioService = usuarioService;
     }
 

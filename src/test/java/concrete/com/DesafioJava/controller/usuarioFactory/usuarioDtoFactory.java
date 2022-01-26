@@ -3,6 +3,7 @@ package concrete.com.DesafioJava.controller.usuarioFactory;
 import concrete.com.DesafioJava.dto.UsuarioCadastroDTO;
 
 public class usuarioDtoFactory {
+
     public static UsuarioCadastroDTO usuarioCadastroDTOSimples() {
         return new UsuarioCadastroDTO("teste", "teste@teste.com.br", "teste");
     }

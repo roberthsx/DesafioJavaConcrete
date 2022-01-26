@@ -1,26 +1,26 @@
 package concrete.com.DesafioJava.service;
 
-import concrete.com.DesafioJava.exception.ExistingEmailException;
 import concrete.com.DesafioJava.exception.ExpiredTokenException;
 import concrete.com.DesafioJava.exception.InvalidLoginException;
 import concrete.com.DesafioJava.model.DadosLogin;
 import concrete.com.DesafioJava.model.Usuario;
-import concrete.com.DesafioJava.repository.IUsuarioRepository;
-import concrete.com.DesafioJava.service.interfaces.ITokenService;
-import concrete.com.DesafioJava.service.interfaces.IUsuarioAuthService;
+import concrete.com.DesafioJava.repository.UsuarioRepository;
+import concrete.com.DesafioJava.service.interfaces.TokenService;
+import concrete.com.DesafioJava.service.interfaces.UsuarioAuthService;
 import io.jsonwebtoken.Claims;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
+import java.util.Optional;
 
 @Service
-public class UsuarioAuthService implements IUsuarioAuthService {
+public class UsuarioAuthServiceImpl implements UsuarioAuthService {
 
-    private final IUsuarioRepository _usuarioRepository;
-    private final ITokenService _tokenService;
+    private final UsuarioRepository _usuarioRepository;
+    private final TokenService _tokenService;
 
-    public UsuarioAuthService(IUsuarioRepository IUsuarioRepository, ITokenService tokenService) {
-        this._usuarioRepository = IUsuarioRepository;
+    public UsuarioAuthServiceImpl(UsuarioRepository UsuarioRepository, TokenService tokenService) {
+        this._usuarioRepository = UsuarioRepository;
         this._tokenService = tokenService;
     }
 
@@ -28,8 +28,10 @@ public class UsuarioAuthService implements IUsuarioAuthService {
 
         StringBuilder mensagemErro = new StringBuilder();
         try {
-            Usuario usuario = _usuarioRepository.findByEmail(dados.getEmail()).orElseThrow(ExistingEmailException::new);
-            if (dados.getSenha().equals(usuario.getSenha()) && !token.isEmpty() && validacao(token)) {
+            Optional<Usuario> usuario = _usuarioRepository.findByEmail(dados.getEmail());
+            //.orElseThrow(ExistingEmailException::new);
+
+            if (dados.getSenha().equals(usuario.get()) && !token.isEmpty() && validacao(token)) {
                 return usuario;
             } else {
                 throw new InvalidLoginException();

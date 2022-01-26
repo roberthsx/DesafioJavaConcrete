@@ -1,9 +1,9 @@
 package concrete.com.DesafioJava.service;
 
 import concrete.com.DesafioJava.model.Usuario;
-import concrete.com.DesafioJava.repository.IUsuarioRepository;
-import concrete.com.DesafioJava.service.interfaces.ITokenService;
-import concrete.com.DesafioJava.service.interfaces.IUsuarioService;
+import concrete.com.DesafioJava.repository.UsuarioRepository;
+import concrete.com.DesafioJava.service.interfaces.TokenService;
+import concrete.com.DesafioJava.service.interfaces.UsuarioService;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -12,12 +12,12 @@ import java.util.regex.Pattern;
 
 
 @Service
-public class UsuarioService implements IUsuarioService {
+public class UsuarioServiceImpl implements UsuarioService {
 
-    private IUsuarioRepository _userRepository;
-    private ITokenService _tokenService;
+    private UsuarioRepository _userRepository;
+    private TokenService _tokenService;
 
-    public UsuarioService(IUsuarioRepository userRepository, ITokenService tokenService) {
+    public UsuarioServiceImpl(UsuarioRepository userRepository, TokenService tokenService) {
         this._userRepository = userRepository;
         this._tokenService = tokenService;
     }

@@ -10,8 +10,5 @@ public class DesafioJavaApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(DesafioJavaApplication.class, args);
-		/*new SpringApplicationBuilder(DesafioJavaApplication.class)
-				.web(WebApplicationType.NONE)
-				.run(args);*/
 	}
 }
