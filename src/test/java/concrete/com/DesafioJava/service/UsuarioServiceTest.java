@@ -33,7 +33,6 @@ public class UsuarioServiceTest {
     @BeforeEach
     public void init() {
 
-        MockitoAnnotations.openMocks(this);
         token = "Bearer eyJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE2NDE5OTAyOTUsInN1YiI6IlRlc3RlIEpXVCBBUEkiLCJleHAiOjE2NDE5OTIwO" +
                 "TV9.e3drFCO4E2IWvrUrqmujL5fXlwR1ArMVcef3qAjs84c";
     }
